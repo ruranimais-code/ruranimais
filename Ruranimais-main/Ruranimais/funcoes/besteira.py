@@ -1,5 +1,7 @@
+
 import time
 from pathlib import Path
+
 
 def mostrar_logo(caminho_logo=None):
     arquivo_logo = (

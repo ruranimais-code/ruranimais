@@ -26,24 +26,11 @@ def cadastrar_usuario():
     # Nome de usuário + validação
     while True:
         nome_usuario = input("Nome de usuário:").strip()
-        if len(nome_usuario) > 12: 
-            rprint(f"\n❌[{vermelho}]Nome inválido. Digite um nome com no máximo 12 caracteres[/{vermelho}]")
+        nome_valido, mensagem_nome = verificar_nome(nome_usuario)
+        if not nome_valido:
+            rprint(f"\n❌[{vermelho}]{mensagem_nome}[/{vermelho}]")
             continue
-        if len(nome_usuario) < 3:
-            rprint(f"\n❌[{vermelho}]Nome inválido. Digite um nome com pelo menos 3 caracteres[/{vermelho}]")
-            continue
-        if " " in nome_usuario:
-            rprint(f"\n❌[{vermelho}]Nome inválido. O nome não pode conter espaços[/{vermelho}]")
-            continue
-        if not re.fullmatch(r"[a-zA-Z0-9_]+", nome_usuario):
-            rprint(f"\n❌[{vermelho}]Nome inválido. O nome só pode conter letras, números e underscores[/{vermelho}]")
-            continue
-
-        # Pra não poder usar dados que já foram cadastrados
-        campo_duplicado = _campo_duplicado(nome_usuario=nome_usuario)
-        if campo_duplicado:
-            rprint(f"\n❌[{vermelho}]{campo_duplicado} nome de usuário já existe[/{vermelho}]")
-            continue
+        rprint(f"\n[{verde}]Nome de usuário disponível![/{verde}]")
         break
 
     # Inserir email + verificação de duas etapas (envio de código e verificação do mesmo)
@@ -191,10 +178,11 @@ def atualizar_dados(dados_usuario):
         opcao = input("")
 
         # Chama função que troca o nome de usuário
-        if opcao.lower() == "nome" or opcao == "1":            
+        if opcao.lower() == "nome" or opcao == "1":      
+            nome_usuario_anterior = dados_usuario[1]      
             dados_usuario = atualizar_nome_usuario(dados_usuario)
-            if dados_usuario is not None:
-                rprint(f"\n[{verde}]Nome atualizado com sucesso![/{verde}]")
+            if dados_usuario[1] != nome_usuario_anterior:
+                rprint(f"\n[{verde}]Nome de usuário atualizado com sucesso![/{verde}]")
                 return dados_usuario
 
         # Chama função que atualiza senha
@@ -216,7 +204,7 @@ def atualizar_dados(dados_usuario):
                 return True
             if conta_deletada is False:
                 continue
-            rprint(f"\n❌[{vermelho}]Não foi possível deletar a conta.[/{vermelho}]")
+            rprint(f"\n❌[{vermelho}]Não foi possível deletar a conta[/{vermelho}]")
 
         # Volta pro menu
         elif opcao.lower() == "voltar" or opcao == "4":

@@ -19,6 +19,24 @@ verde = "#719029"
 bege = "#F8E8CF"
 
 #CAD
+# Confirmar se nome de usuário é válido
+def verificar_nome(nome_usuario):
+        if len(nome_usuario) > 12:            
+            return False, "Nome inválido. Digite um nome com no máximo 12 caracteres"
+        elif len(nome_usuario) < 3:
+            return False, "Nome inválido. Digite um nome com pelo menos 3 caracteres"
+        elif " " in nome_usuario:
+            return False, "Nome inválido. O nome não pode conter espaços"
+        elif not re.fullmatch(r"[a-zA-Z0-9_]+", nome_usuario):
+            return False,"Nome inválido. O nome só pode conter letras, números e underscore/underline"
+
+        # Pra não poder usar dados que já foram cadastrados
+        campo_duplicado = _campo_duplicado(nome_usuario=nome_usuario)
+        if campo_duplicado:
+            return False, "Usuário já existe"
+        else:
+            return True, "𖹭"
+
 # Confirmar se a senha é válida
 def verificar_senha(senha):
     if len(senha) < 8:
@@ -223,18 +241,6 @@ def deletar_usuario(email, nome_usuario, cpf, senha):
 #atualizar senha
 def atualizar_senha(dados_usuario):
     while True:
-        rprint(f"\n[{amarelo}]Deseja atualizar sua senha?[/{amarelo}]")
-        confirmacao_atualizacao = input(
-        f"OBS.: Essa ação não pode ser desfeita!\n(s/n): "
-        ).strip().lower()
-        if confirmacao_atualizacao == "s":
-            break
-        if confirmacao_atualizacao == "n":
-            rprint(f"[{verde}]Ebaaa, sua conta continua intacta![/{verde}]")
-            return None
-        rprint(f"[{vermelho}]Opção inválida. Digite s ou n.[/{vermelho}]")
-
-    while True:
         rprint("\nSenha precisa conter:\n- Pelo menos 8 caracteres\n- Uma letra maiúscula\n- Uma letra minúscula\n- Um número\n- Um caractere especial")
         nova_senha = input("Digite sua nova senha: ").strip()
         senha_valida, mensagem = verificar_senha(nova_senha)
@@ -267,23 +273,12 @@ def atualizar_senha(dados_usuario):
 def atualizar_nome_usuario(dados_usuario):
     while True:
         novo_nome_usuario = input("Nome de usuário:").strip()
-        if len(novo_nome_usuario) > 12: 
-            rprint(f"\n❌[{vermelho}]Nome inválido. Digite um nome com no máximo 12 caracteres[/{vermelho}]")
-            continue
-        if len(novo_nome_usuario) < 3:
-            rprint(f"\n❌[{vermelho}]Nome inválido. Digite um nome com pelo menos 3 caracteres[/{vermelho}]")
-            continue
-        if " " in novo_nome_usuario:
-            rprint(f"\n❌[{vermelho}]Nome inválido. O nome não pode conter espaços[/{vermelho}]")
-            continue
-        if not re.fullmatch(r"[a-zA-Z0-9_]+", novo_nome_usuario):
-            rprint(f"\n❌[{vermelho}]Nome inválido. O nome só pode conter letras, números e underscores[/{vermelho}]")
-            continue
-    
-        # Pra não poder usar dados que já foram cadastrados
-        campo_duplicado = _campo_duplicado(nome_usuario=novo_nome_usuario)
-        if campo_duplicado:
-            rprint(f"\n❌[{vermelho}]{campo_duplicado} nome de usuário já existe[/{vermelho}]")
+        if novo_nome_usuario == dados_usuario[1]:
+            rprint(f"\n[{amarelo}]Nome de usuário permanece o mesmo[/{amarelo}]")
+            return dados_usuario
+        nome_valido, mensagem_nome = verificar_nome(novo_nome_usuario)
+        if not nome_valido:
+            rprint(f"\n❌[{vermelho}]{mensagem_nome}[/{vermelho}]")
             continue
         break
 
