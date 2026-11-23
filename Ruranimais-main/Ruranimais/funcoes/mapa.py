@@ -12,6 +12,12 @@ from pathlib import Path
 from threading import Thread
 
 
+# Pro log sumir
+class MapaHTTPRequestHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        pass
+
+
 # Mapa
 class Mapa:
 
@@ -79,12 +85,11 @@ class Mapa:
         # Pra conectar com o servidor eba
         servidor = ThreadingHTTPServer(
             ("127.0.0.1", 8765),
-            partial(SimpleHTTPRequestHandler, directory=str(diretorio_mapa)),
+            partial(MapaHTTPRequestHandler, directory=str(diretorio_mapa)),
         )
 
         Thread(target=servidor.serve_forever, daemon=True).start()
         webbrowser.open("http://127.0.0.1:8765/footprint.html")
-        print("Mapa disponível em http://127.0.0.1:8765/footprint.html")
         return servidor
 
     @staticmethod
@@ -99,3 +104,5 @@ class Mapa:
         finally:
             servidor.shutdown()
             servidor.server_close()
+            
+Mapa.abrir_mapa()
