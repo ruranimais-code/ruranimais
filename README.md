@@ -147,7 +147,8 @@ Ao abrir o programa, o menu principal oferece:
 | `4` Atualizar dados | Troca nome, troca senha ou deleta a conta |
 | `5` Conversas | Abre o bate-papo |
 | `6` Feed | Abre as postagens e enquetes |
-| `7` Sair | Encerra o programa |
+| `7` Mapa | Abre o mapa folium |
+| `8` Sair | Encerra o programa |
 
 Dentro do **Feed**: `N` cria uma postagem, `O` troca a ordem, o número abre uma postagem, `+`/`-` curte ou descurte, `C` comenta e `E` vota na enquete.
 
