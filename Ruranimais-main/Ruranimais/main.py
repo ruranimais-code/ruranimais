@@ -1,23 +1,32 @@
-# Bibliotecas
-from rich import print as rprint
-from rich.console import Console
-console = Console()
+from pathlib import Path
+import sys
+
+# Tava dando problema pra rodar pra mim e tive q adicionar isso </3
+raiz_projeto = Path(__file__).resolve().parent
+if str(raiz_projeto) not in sys.path:
+    sys.path.insert(0, str(raiz_projeto))
 
 # Imports
 import time
-import os
-import platform
-from CRUD import *
-from funcoes.besteira import mostrar_logo
+
+from playsound3 import playsound
+
+from funcoes.util import Util, amarelo, conexao, cursor, rprint, verde, vermelho
+from funcoes.mapa import Mapa
+from social.chat import menu_chat
+from social.feed import menu_feed
+from social.mensagem import Mensagem
+from social.postagem import Postagem
+from usuario.atualizar import atualizar_dados
+from usuario.cadastro import cadastrar_usuario
+from usuario.login import login
+from usuario.usuario import Usuario
 
 # Musiquinha eba !!
-from playsound3 import playsound
-playsound("musga_menu.mp3", False)
+musica_menu = Path(__file__).resolve().parent / "assets" / "musga_menu.mp3"
+playsound(str(musica_menu), False)
 
-# Criação e Conexão do Banco de Dados - SQlite
-import sqlite3
-conexao = sqlite3.connect("banco.db")
-cursor = conexao.cursor()
+# Criação do Banco de Dados
 cursor.execute(''' CREATE TABLE IF NOT EXISTS usuarios_ruranimais (
                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                nome_usuario TEXT NOT NULL,
@@ -26,29 +35,14 @@ cursor.execute(''' CREATE TABLE IF NOT EXISTS usuarios_ruranimais (
                cpf TEXT NOT NULL)
 ''')
 conexao.commit()
-
-#Identificação de Sistema + Limpeza Inicial do Terminal
-if platform.system() == "Linux" or platform.system() == "Darwin":
-    comando_de_limpeza = "clear"
-if platform.system() == "Windows":
-    comando_de_limpeza = "cls"
-    os.system(comando_de_limpeza)
-
-# Cores Utilizadas Frequentemente
-amarelo = "#EEA103"
-vermelho = "#D74013"
-azul = "#2B283B"
-verde = "#719029"
-bege = "#F8E8CF"
+Mensagem.criar_tabela()
+Postagem.criar_tabelas()
 
 confirmacao_log = []
 
-# Mostra a logo do Ruranimais ao iniciar
-mostrar_logo()
-
-# Início do Programa - Menu Ruranimais :)
+# Início do Programa - Menu Ruranimais :3
 def menu_inicial():
-    os.system(comando_de_limpeza)
+    Util.limpar_terminal()
     while True:
         rprint(f"\n[{vermelho}]===============================[/{vermelho}]")
         rprint(f":heart:  𖹭  [{verde}][bold]R U R A N I M A I S[/bold][/{verde}] 𖹭 :heart:")
@@ -58,16 +52,21 @@ def menu_inicial():
                f"2 - [{amarelo}]Login[/{amarelo}] de usuário\n"
                f"3 - [{amarelo}]Perfil[/{amarelo}]\n"
                f"4 - [{amarelo}]Atualizar[/{amarelo}] Dados\n"
-               f"5 - [{amarelo}]Sair[/{amarelo}] do programa\n"
+               f"5 - [{amarelo}]Conversas[/{amarelo}] (mensagens)\n"
+               f"6 - [{amarelo}]Feed[/{amarelo}] de postagens\n"
+               f"7 - [{amarelo}]Mapa[/{amarelo}]\n"
+               f"8 - [{amarelo}]Sair[/{amarelo}] do programa\n"
                f"\n[{amarelo}][bold]Escolha uma opção: [/bold][/{amarelo}]\n"
                )
 
         opcao = input("")
 
+
         if opcao.lower() == "cadastrar" or opcao == "1":
-            os.system(comando_de_limpeza)
+            Util.limpar_terminal()
             cadastrar_usuario()
             print("Após o cadastro, é necessário realizar o login para acessar o sistema.")
+
 
         elif opcao.lower() == "login" or opcao == "2":
             lista_dados_usuario = login()
@@ -76,9 +75,10 @@ def menu_inicial():
             else:
                 confirmacao_log.clear()
 
+
         elif opcao.lower() == "perfil" or opcao == "3":
             if len(confirmacao_log) == 0:
-                os.system(comando_de_limpeza)
+                Util.limpar_terminal()
                 print("\nVocê não está logado. Faça o login primeiro.")
                 time.sleep(2)
             else:
@@ -96,11 +96,11 @@ def menu_inicial():
                     
         elif opcao.lower() == "atualizar" or opcao == "4":
             if len(confirmacao_log) == 0:
-                os.system(comando_de_limpeza)
+                Util.limpar_terminal()
                 print("\nVocê não está logado. Faça o login primeiro.")
                 time.sleep(2)
             else:
-                os.system(comando_de_limpeza)
+                Util.limpar_terminal()
                 resultado_atualizacao = atualizar_dados(lista_dados_usuario)
                 if resultado_atualizacao is True:
                     confirmacao_log.clear()
@@ -110,19 +110,44 @@ def menu_inicial():
                 else:
                     rprint(f"[{amarelo}]Voltando...[/{amarelo}]")
 
-        elif opcao.lower() == "sair" or opcao == "5":
-            os.system(comando_de_limpeza)
+
+        elif opcao.lower() == "conversas" or opcao == "5":
+            if len(confirmacao_log) == 0:
+                Util.limpar_terminal()
+                print("\nVocê não está logado. Faça o login primeiro.")
+                time.sleep(2)
+            else:
+                menu_chat(Usuario.from_tupla(lista_dados_usuario))
+                Util.limpar_terminal()
+
+
+        elif opcao.lower() == "feed" or opcao == "6":
+            if len(confirmacao_log) == 0:
+                Util.limpar_terminal()
+                print("\nVocê não está logado. Faça o login primeiro.")
+                time.sleep(2)
+            else:
+                menu_feed(Usuario.from_tupla(lista_dados_usuario))
+                Util.limpar_terminal()
+
+
+        elif opcao.lower() == "mapa" or opcao == "7":
+            Util.limpar_terminal()
+            Mapa.abrir_mapa()
+
+
+        elif opcao.lower() == "sair" or opcao == "8":
+            Util.limpar_terminal()
             rprint("\n\n\n[#eea103][bold]Até logo![/bold][/#eea103]\n\n\n")
             exit()
+
         
         else:
-            os.system(comando_de_limpeza)
+            Util.limpar_terminal()
             rprint(
                    f"[{vermelho}]=====================[/{vermelho}]\n\n"
                    f"[bold][{vermelho}]Opção inválida! Tente novamente :)[/{vermelho}][/bold]\n\n"
                    f"[{vermelho}]=====================[/{vermelho}]\n\n"
                   )
             time.sleep(2)
-            os.system(comando_de_limpeza)
-
-menu_inicial()
+            Util.limpar_terminal()
