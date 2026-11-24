@@ -31,9 +31,9 @@ class Postagem:
         self.data = data
         self.autor_nome = autor_nome
         self.pontos = pontos
-        self.qtd_comentarios.tem_enquete  = qtd_comentarios
-        self= tem_enquete  
-        # ^True se a postagem tem enquete
+        self.qtd_comentarios = qtd_comentarios
+        self.tem_enquete = tem_enquete
+        # ^ True se tem enquete
 
 
     # Cria tabelas do feed se ainda não existirem
