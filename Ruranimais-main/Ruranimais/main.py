@@ -40,7 +40,7 @@ Postagem.criar_tabelas()
 
 confirmacao_log = []
 
-# Início do Programa - Menu Ruranimais :3
+# Menu Ruranimais :3
 def menu_inicial():
     Util.limpar_terminal()
     while True:
@@ -151,3 +151,8 @@ def menu_inicial():
                   )
             time.sleep(2)
             Util.limpar_terminal()
+
+
+# Início do programa
+Util.mostrar_logo() # Mostra logo do Ruranimais
+menu_inicial()

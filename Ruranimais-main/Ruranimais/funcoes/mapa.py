@@ -105,4 +105,3 @@ class Mapa:
             servidor.shutdown()
             servidor.server_close()
             
-Mapa.abrir_mapa()

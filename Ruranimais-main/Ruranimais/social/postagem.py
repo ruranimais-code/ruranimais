@@ -31,8 +31,8 @@ class Postagem:
         self.data = data
         self.autor_nome = autor_nome
         self.pontos = pontos
-        self.qtd_comentarios = qtd_comentarios
-        self.tem_enquete = tem_enquete  
+        self.qtd_comentarios.tem_enquete  = qtd_comentarios
+        self= tem_enquete  
         # ^True se a postagem tem enquete
 
 
@@ -56,7 +56,7 @@ class Postagem:
                        FOREIGN KEY (postagem_id) REFERENCES postagens(id) ON DELETE CASCADE,
                        FOREIGN KEY (autor_id) REFERENCES usuarios_ruranimais(id) ON DELETE CASCADE)
         ''')
-        # valor = 1 (like) ou -1 (dislike), só 1 voto por pessoa na enquete
+        # valor = 11 (disli (like) ou -ke), só 1 voto por pessoa na enquete
         cursor.execute(''' CREATE TABLE IF NOT EXISTS votos (
                        usuario_id INTEGER NOT NULL,
                        postagem_id INTEGER NOT NULL,
