@@ -153,3 +153,5 @@ Ao abrir o programa, o menu principal oferece:
 Dentro do **Feed**: `N` cria uma postagem, `O` troca a ordem, o número abre uma postagem, `+`/`-` curte ou descurte, `C` comenta e `E` vota na enquete.
 
 Dentro das **Conversas**: `N` inicia uma conversa nova, o número abre uma conversa existente e, dentro dela, `Enter` atualiza as mensagens e `/sair` volta.
+
+Dentro do **Mapa**: `V` ou `Voltar` voltam para o menu inicial
