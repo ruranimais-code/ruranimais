@@ -84,6 +84,7 @@ O projeto é desenvolvido em **Python**, com interface no terminal e banco de da
 ```text
 (Ruranimais-main)
 ├── banco.db
+├── requiremens.txt
 └── Ruranimais/
     ├── main.py
     │
