@@ -156,7 +156,9 @@ Dentro das **Conversas**: `N` inicia uma conversa nova, o número abre uma conve
 
 Dentro do **Mapa**: `V` ou `Voltar` voltam para o menu inicial
 
-**OBS:** É necessário ter baixadas todas as bibliotecas mencionadas para que o programa funcione. Basta copiar e colar
-| python -m pip install -r requirements.txt |
+**OBS:** É necessário ter baixadas todas as bibliotecas mencionadas para que o programa funcione. Basta copiar e colar 
+
+( python -m pip install -r requirements.txt )
+
 no terminal :D
 
