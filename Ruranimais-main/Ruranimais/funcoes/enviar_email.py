@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 class EnviarEmail:
 
     # Carrega o que tem dentro do .env
-    load_dotenv()
+    load_dotenv(override=True)
     if not os.environ.get("SENHA_APP") or not os.environ.get("EMAIL_REMETENTE"):
         raise EnvironmentError(
             "As variáveis de ambiente EMAIL_REMETENTE e SENHA_APP não estão definidas"

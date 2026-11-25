@@ -1,0 +1,6 @@
+rich
+requests
+python-dotenv
+playsound3
+numpy
+folium

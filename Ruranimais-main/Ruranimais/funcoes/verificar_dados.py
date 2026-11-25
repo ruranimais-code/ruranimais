@@ -67,7 +67,7 @@ class Validacao:
 
 
     # Carrega o que tem dentro do .env
-    load_dotenv()
+    load_dotenv(override=True)
     if not os.environ.get("API_KEY_CPF"):
         raise EnvironmentError(
             "A variável de ambiente API_KEY_CPF não está definida"
