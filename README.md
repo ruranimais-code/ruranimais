@@ -94,8 +94,7 @@ O projeto é desenvolvido em **Python**, com interface no terminal e banco de da
     │   └── ufrpe.geojson
     │
     ├── funcoes/
-    │   ├── .env                       (NÃO vai pro git)
-    │   ├── .gitignore
+    │   ├── .env
     │   ├── atualizar_dados.py
     │   ├── enviar_email.py
     │   ├── footprint.html
