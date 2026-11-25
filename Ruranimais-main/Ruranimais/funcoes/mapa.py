@@ -25,6 +25,7 @@ class Mapa:
     @staticmethod
     def gerar_mapa():
         diretorio_mapa = Path(__file__).resolve().parent
+        diretorio_projeto = diretorio_mapa.parent
         arquivo_mapa = diretorio_mapa / "footprint.html"
 
         mapa_ufrpe = folium.Map(location = [-8.01684136482162, -34.94927713266724],
@@ -33,15 +34,15 @@ class Mapa:
 
         # Dados de entrada
         # Adicionar fronteira
-        geojson_arquivo = "Ruranimais/assets/ufrpe.geojson"
+        geojson_arquivo = diretorio_projeto / "assets" / "ufrpe.geojson"
         estilo = lambda x: {"color": "black",
                             "fillOpacity": 0,
                             "weight": 1}
-        folium.GeoJson(geojson_arquivo, style_function=estilo, 
+        folium.GeoJson(str(geojson_arquivo), style_function=estilo,
                        name="Campus").add_to(mapa_ufrpe)
         # Dados (tudo inventado >.<)
         frequencia_bichinhos = np.genfromtxt(
-            "Ruranimais/assets/frequencia_bichinhos.csv",
+            diretorio_projeto / "assets" / "frequencia_bichinhos.csv",
             delimiter=",",
             skip_header=1,
             usecols=(0, 1, 2),

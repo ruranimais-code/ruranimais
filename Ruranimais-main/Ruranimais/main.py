@@ -43,7 +43,6 @@ confirmacao_log = []
 # Menu Ruranimais :3
 def menu_inicial():
     while True:
-        Util.limpar_terminal()
         rprint(f"\n[{vermelho}]===============================[/{vermelho}]")
         rprint(f":heart:  𖹭  [{verde}][bold]R U R A N I M A I S[/bold][/{verde}] 𖹭 :heart:")
         rprint(f"[{vermelho}]===============================\n[/{vermelho}]")
@@ -154,5 +153,6 @@ def menu_inicial():
 
 
 # Início do programa
+Util.limpar_terminal()
 Util.mostrar_logo() # Mostra logo do Ruranimais
 menu_inicial()
